@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      section,
+      div,
+      h1,
+      p {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body class="text-rose-500 flex flex-col justify-center h-screen bg-sky-800">
+    <section id="heading">
+      <h1 class="text-6xl text-center font-extrabold">Calculator</h1>
+    </section>
+
+    <section
+      id="main-area"
+      class="flex flex-row justify-center w-auto gap-20 h-4/5 items-center"
+    >
+      <div id="left-side"></div>
+      <div
+        id="calculator"
+        class="w-1/4 h-5/6 rounded-2xl bg-red-600 flex flex-col items-center"
+      >
+        <div
+          id="display"
+          class="w-11/12 h-1/5 my-3 rounded-xl bg-slate-500"
+        ></div>
+        <div id="button-area"></div>
+      </div>
+      <div id="right-side"></div>
+    </section>
+
+    <section id="footer">
+      <p class="text-2xl text-center font-semibold">Copyright Shreyash</p>
+    </section>
+  </body>
+</html>
