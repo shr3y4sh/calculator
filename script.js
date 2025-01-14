@@ -4,7 +4,7 @@ let buttons = document.querySelectorAll(".button");
 
 buttons.forEach((button) =>
   button.addEventListener("click", function () {
-    console.log("Blinking stopped");
+    // console.log("Blinking stopped");
     this.classList.add("pressed");
     // console.log(this);
     let audio = new Audio((src = "assets/sounds/ui-click.mp3"));
@@ -19,13 +19,85 @@ buttons.forEach((button) =>
 
 var displayArea = document.querySelector("#display");
 
+// console.log(displayArea.getAttribute("id"));
+
+// console.log(typeof document.querySelector("#seven").getAttribute("class"));
+
+var ListOfButtons = {
+  one: 1,
+  two: 2,
+  three: 3,
+  four: 4,
+  five: 5,
+  six: 6,
+  seven: 7,
+  eight: 8,
+  nine: 9,
+  zero: 0,
+  decimal: {
+    display: ".",
+  },
+  equalto: {
+    display: "=",
+  },
+  divide: {
+    display: "/",
+    operation: (a, b) => {
+      return a / b;
+    },
+  },
+  multiply: {
+    display: "*",
+    operation: (a, b) => {
+      return a * b;
+    },
+  },
+  subtract: {
+    display: "-",
+    operation: (a, b) => {
+      return a - b;
+    },
+  },
+  add: {
+    display: "+",
+    operation: (a, b) => {
+      return a + b;
+    },
+  },
+  power: {
+    display: "^",
+    operation: (a, b) => {
+      return Math.pow(a, b);
+    },
+  },
+};
+
 buttons.forEach((button) =>
-  button.addEventListener("click", function (event) {
-    console.log(this);
-    let screenNumber = document.createElement("div");
-    screenNumber.setAttribute("id", "screen");
-    screenNumber.classList.add("in-screen");
-    screenNumber.innerText = "A";
-    displayArea.appendChild(screenNumber);
+  button.addEventListener("click", function () {
+    console.log(displayArea.hasChildNodes());
+    let clicked = button.getAttribute("id");
+    console.log(clicked);
+    let value = ListOfButtons[clicked];
+    console.log(value);
+    console.log(typeof value);
+    if (typeof value === "number") {
+      let input = document.createElement("div");
+      console.log("here");
+      input.innerHTML = value;
+      input.classList.add("text-end", "text-black", "text-7xl", "pb-1", "pr-1");
+      console.log(input);
+      displayArea.appendChild(input);
+    } else {
+      if (displayArea.hasChildNodes() === false) {
+        return;
+      }
+
+      let input = document.createElement("div");
+      console.log("here");
+      input.innerHTML = value.display;
+      input.classList.add("text-end", "text-black", "text-7xl", "pb-1", "pr-1");
+      console.log(input);
+      displayArea.appendChild(input);
+    }
   })
 );
