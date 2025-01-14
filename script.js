@@ -84,7 +84,7 @@ buttons.forEach((button) =>
       let input = document.createElement("div");
       console.log("here");
       input.innerHTML = value;
-      input.classList.add("text-end", "text-black", "text-7xl", "pb-1", "pr-1");
+      input.classList.add("in-screen");
       console.log(input);
       displayArea.appendChild(input);
     } else {
@@ -95,7 +95,7 @@ buttons.forEach((button) =>
       let input = document.createElement("div");
       console.log("here");
       input.innerHTML = value.display;
-      input.classList.add("text-end", "text-black", "text-7xl", "pb-1", "pr-1");
+      input.classList.add("in-screen");
       console.log(input);
       displayArea.appendChild(input);
     }
