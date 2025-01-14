@@ -5,235 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
     <link href="styles.css" rel="stylesheet" />
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-    <!-- <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              back: "#151515",
-              word: "#EEEEEE",
-              play: "#A91D3A",
-              b_area: "#D76C82",
-              buttons: "#C73659",
-            },
-          },
-        },
-      };
-    </script> -->
-    <style>
-      section,
-      div,
-      h1,
-      p {
-         border: 1px solid red; 
-      }
-
-      .in-screen {
-        color: black;
-        font-size: 4.8rem;
-        padding-left: 15px;
-        width: 20%;
-        height: 80%;
-        margin-right: 5px;
-        margin-bottom: 5px;
-      }
-
-      .blinking {
-        visibility: hidden;
-      }
-
-      .button {
-        box-shadow: 1px 4px 4px 1px rgb(0, 0, 0, 0.2);
-      }
-
-      .pressed {
-        box-shadow: inset 0 2px 4px 0 rgb(0, 0, 0, 0.4);
-        border: none;
-      }
-    </style>
   </head>
-  <body class="text-word flex flex-col justify-center h-screen bg-back">
+  <body>
     <section id="heading">
-      <h1 class="text-6xl text-center font-extrabold">Calculator</h1>
+      <h1>Calculator</h1>
     </section>
 
-    <section
-      id="main-area"
-      class="flex flex-row justify-center w-auto gap-20 h-4/5 items-center"
-    >
+    <section id="main-area">
       <div id="left-side"></div>
-      <div
-        id="calculator"
-        class="w-1/4 h-5/6 rounded-2xl bg-play flex flex-col items-center"
-      >
-        <div id="display" class="w-11/12 h-1/5 my-4 rounded-xl bg-word flex flex-row items-end justify-end">
-        
-        </div>
-        <div
-          id="button-area"
-          class="w-11/12 h-4/6 mt-5 rounded-xl bg-b_area grid grid-row-5 grid-cols-4 gap-1 p-2"
-        >
-          <div id="seven" class="button rounded-xl bg-buttons ps-8 pt-4">
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/7.svg" width="30px" height="30px" />
+      <div id="calculator">
+        <div id="display"></div>
+        <div id="button-area">
+          <div id="seven" class="button">
+            <svg>
+              <img src="assets/svgs/7.svg" />
             </svg>
           </div>
-          <div
-            id="eight"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/8.svg" width="30px" height="30px" />
+          <div id="eight" class="button">
+            <svg>
+              <img src="assets/svgs/8.svg" />
             </svg>
           </div>
-          <div
-            id="nine"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/9.svg" width="30px" height="30px" />
+          <div id="nine" class="button">
+            <svg>
+              <img src="assets/svgs/9.svg" />
             </svg>
           </div>
-          <div
-            id="divide"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/divide.svg" width="30px" height="30px" />
+          <div id="divide" class="button">
+            <svg>
+              <img src="assets/svgs/divide.svg" />
             </svg>
           </div>
-          <div
-            id="four"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/4.svg" width="30px" height="30px" />
+          <div id="four" class="button">
+            <svg>
+              <img src="assets/svgs/4.svg" />
             </svg>
           </div>
-          <div
-            id="five"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/5.svg" width="30px" height="30px" />
+          <div id="five" class="button">
+            <svg>
+              <img src="assets/svgs/5.svg" />
             </svg>
           </div>
-          <div
-            id="six"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/6.svg" width="30px" height="30px" />
+          <div id="six" class="button">
+            <svg>
+              <img src="assets/svgs/6.svg" />
             </svg>
           </div>
-          <div
-            id="multiply"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/cross.svg" width="30px" height="30px" />
+          <div id="multiply" class="button">
+            <svg>
+              <img src="assets/svgs/cross.svg" />
             </svg>
           </div>
-          <div
-            id="one"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/1.svg" width="30px" height="30px" />
+          <div id="one" class="button">
+            <svg>
+              <img src="assets/svgs/1.svg" />
             </svg>
           </div>
-          <div
-            id="two"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/2.svg" width="30px" height="30px" />
+          <div id="two" class="button">
+            <svg>
+              <img src="assets/svgs/2.svg" />
             </svg>
           </div>
-          <div
-            id="three"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/3.svg" width="30px" height="30px" />
+          <div id="three" class="button">
+            <svg>
+              <img src="assets/svgs/3.svg" />
             </svg>
           </div>
-          <div
-            id="subtract"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/minus.svg" width="30px" height="30px" />
+          <div id="subtract" class="button">
+            <svg>
+              <img src="assets/svgs/minus.svg" />
             </svg>
           </div>
-          <div
-            id="power"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/caret-up.svg" width="30px" height="30px" />
+          <div id="power" class="button">
+            <svg>
+              <img src="assets/svgs/caret-up.svg" />
             </svg>
           </div>
-          <div
-            id="zero"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/0.svg" width="30px" height="30px" />
+          <div id="zero" class="button">
+            <svg>
+              <img src="assets/svgs/0.svg" />
             </svg>
           </div>
-          <div
-            id="decimal"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/wifi-1.svg" width="30px" height="30px" />
+          <div id="decimal" class="button">
+            <svg>
+              <img src="assets/svgs/wifi-1.svg" />
             </svg>
           </div>
-          <div
-            id="add"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="10px">
-              <img src="assets/svgs/plus.svg" width="30px" height="30px" />
+          <div id="add" class="button">
+            <svg>
+              <img src="assets/svgs/plus.svg" />
             </svg>
           </div>
-          <div
-            id="clear"
-            class="button rounded-xl bg-buttons text-center ps-7 pt-4"
-          > <svg width="10px" height="7px" >
-            <img src="assets/images/clear.png" width="40px" height="30px" />
-          </div></svg>
-          <div
-            id="backspace"
-            class="button rounded-xl bg-buttons text-center ps-8 pt-4"
-          >
-            <svg width="10px" height="7px">
-              <img src="assets/svgs/delete.svg" width="30px" height="20px" class="mt-2"/>
+          <div id="clear" class="button">
+            <svg>
+              <img src="assets/images/clear.png" />
             </svg>
           </div>
-          <div
-            id="equalto"
-            class="button rounded-xl bg-buttons text-center pl-12 pt-4 col-span-2"
-          >
-            <svg width="10px" height="7px">
-              <img
-                src="assets/svgs/equals.svg"
-                width="30px"
-                height="20px"
-                class="ml-9 mt-1"
-              />
+          <div id="backspace" class="button">
+            <svg>
+              <img src="assets/svgs/delete.svg" />
             </svg>
           </div>
-          <!-- <div class="button rounded-xl bg-buttons text-center"></div> -->
+          <div id="equalto" class="button">
+            <svg>
+              <img src="assets/svgs/equals.svg" />
+            </svg>
+          </div>
         </div>
       </div>
       <div id="right-side"></div>
     </section>
 
     <section id="footer">
-      <p class="text-2xl text-center font-semibold">Copyright Shreyash</p>
+      <p>Copyrightⓒ Shreyash</p>
     </section>
 
     <script src="script.js"></script>

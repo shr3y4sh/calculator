@@ -1,14 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Mono&display=swap");
+
 body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 100vh;
   background-color: #151515;
   color: #eee;
+  font-family: "PT Mono", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 3.2rem;
   text-align: center;
   font-weight: 700;
 }
@@ -19,4 +25,108 @@ h1 {
   justify-content: center;
   width: auto;
   gap: 20px;
+}
+
+#calculator {
+  width: 500px;
+  height: 70vh;
+  border-radius: 50px;
+  background: #a91d3a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 10px;
+}
+
+#display {
+  box-sizing: border-box;
+  width: 95%;
+  height: 22%;
+  border-radius: 40px;
+  background-color: #eee;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  gap: 1px;
+  margin-top: 10px;
+  padding: 15px;
+}
+
+.in-screen {
+  box-sizing: border-box;
+  color: black;
+  font-size: 3.5rem;
+  /* padding-left: 10px; */
+  /* margin-top: 90px; */
+  text-align: end;
+  /* width: auto; */
+  /* padding: 20px 10px; */
+  /* margin: 0px 5px; */
+  /* padding-right: 10px; */
+  font-family: "PT Mono", serif;
+  width: 9%;
+  height: 60%;
+  /* margin-right: 5px; */
+  /* margin-bottom: 5px; */
+}
+
+#button-area {
+  box-sizing: border-box;
+  width: 95%;
+  height: 70%;
+  border-radius: 40px;
+  background-color: #d76c82;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  padding: 10px;
+  /* margin-bottom: 10px; */
+}
+
+.button {
+  border-radius: 40px;
+  background-color: #c73659;
+  /* padding-left: 5px;
+  padding-top: 2px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 4px 4px 1px rgb(0, 0, 0, 0.2);
+}
+
+svg {
+  width: 20px;
+  height: 20px;
+}
+
+img {
+  /* padding-top: 30px; */
+  padding-right: 25px;
+  width: 30px;
+  height: 30px;
+}
+
+#equalto {
+  /* display: flex; */
+  grid-column: span 2;
+  border-radius: 40px;
+  background-color: #c73659;
+  /* padding-left: 5px;
+  padding-top: 2px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#footer {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.pressed {
+  box-shadow: inset 0 2px 4px 0 rgb(0, 0, 0, 0.4);
+  border: none;
 }
