@@ -30,7 +30,7 @@ h1 {
 #calculator {
   width: 500px;
   height: 70vh;
-  border-radius: 50px;
+  border-radius: 20px;
   background: #a91d3a;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@ h1 {
   box-sizing: border-box;
   width: 95%;
   height: 22%;
-  border-radius: 40px;
+  border-radius: 10px;
   background-color: #eee;
   display: flex;
   align-items: end;
@@ -75,7 +75,7 @@ h1 {
   box-sizing: border-box;
   width: 95%;
   height: 70%;
-  border-radius: 40px;
+  border-radius: 10px;
   background-color: #d76c82;
   display: grid;
   gap: 5px;
@@ -86,7 +86,7 @@ h1 {
 }
 
 .button {
-  border-radius: 40px;
+  border-radius: 10px;
   background-color: #c73659;
   /* padding-left: 5px;
   padding-top: 2px; */
@@ -111,7 +111,7 @@ img {
 #equalto {
   /* display: flex; */
   grid-column: span 2;
-  border-radius: 40px;
+  border-radius: 10px;
   background-color: #c73659;
   /* padding-left: 5px;
   padding-top: 2px; */
