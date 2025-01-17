@@ -70,33 +70,59 @@ var ListOfButtons = {
       return Math.pow(a, b);
     },
   },
+
+  clear: {},
+  backspace: {},
 };
+
+let history = [];
 
 buttons.forEach((button) =>
   button.addEventListener("click", function () {
-    console.log(displayArea.hasChildNodes());
+    // console.log(displayArea.hasChildNodes());
     let clicked = button.getAttribute("id");
     console.log(clicked);
+    console.log(displayArea);
     let value = ListOfButtons[clicked];
-    console.log(value);
-    console.log(typeof value);
+    // console.log(value);
+    // console.log(typeof value);
+    if (value === ListOfButtons.clear) {
+      try {
+        displayArea.innerHTML = "";
+      } catch {
+        console.log("NO child node yet");
+      }
+    }
+
+    if (value === ListOfButtons.backspace) {
+      try {
+        console.log(displayArea.lastChild);
+        displayArea.lastChild.remove();
+        return;
+        // displayArea.lastChild.remove();
+        // console.log(displayArea.lastChild);
+      } catch {
+        console.log("NO element yet");
+      }
+    }
+
     if (typeof value === "number") {
+      history.push(value);
       let input = document.createElement("div");
-      console.log("here");
+      // console.log("here");
       input.innerHTML = value;
       input.classList.add("in-screen");
-      console.log(input);
+      // console.log(input);
       displayArea.appendChild(input);
     } else {
       if (displayArea.hasChildNodes() === false) {
         return;
       }
-
       let input = document.createElement("div");
-      console.log("here");
+      // console.log("here");
       input.innerHTML = value.display;
       input.classList.add("in-screen");
-      console.log(input);
+      // console.log(input);
       displayArea.appendChild(input);
     }
   })
