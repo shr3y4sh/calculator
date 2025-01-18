@@ -4,9 +4,7 @@ let buttons = document.querySelectorAll(".button");
 
 buttons.forEach((button) =>
   button.addEventListener("click", function () {
-    // console.log("Blinking stopped");
     this.classList.add("pressed");
-    // console.log(this);
     let audio = new Audio((src = "assets/sounds/ui-click.mp3"));
     audio.play();
     setTimeout(() => {
@@ -19,9 +17,9 @@ buttons.forEach((button) =>
 
 var displayArea = document.querySelector("#display");
 
-// console.log(displayArea.getAttribute("id"));
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-// console.log(typeof document.querySelector("#seven").getAttribute("class"));
+// OBJECT OF BUTTONS
 
 var ListOfButtons = {
   one: 1,
@@ -34,22 +32,20 @@ var ListOfButtons = {
   eight: 8,
   nine: 9,
   zero: 0,
-  decimal: {
-    display: ".",
-  },
-  equalto: {
-    display: "=",
-  },
+  decimal: ".",
+  equalto: "=",
   divide: {
     display: "/",
     operation: (a, b) => {
-      return a / b;
+      dividend = a / b;
+      dividend = Math.round(dividend * 10) / 10;
+      return dividend;
     },
   },
   multiply: {
     display: "*",
     operation: (a, b) => {
-      return a * b;
+      return Math.round(a * b * 10) / 10;
     },
   },
   subtract: {
@@ -67,63 +63,174 @@ var ListOfButtons = {
   power: {
     display: "^",
     operation: (a, b) => {
-      return Math.pow(a, b);
+      return Math.round(Math.pow(a, b) * 10) / 10;
     },
   },
 
-  clear: {},
-  backspace: {},
+  clear: "clear",
+  backspace: "backspace",
 };
 
-let history = [];
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+// CREATING INPUT DISPLAY FUNCTION
+
+function makeNewDiv(displayValue) {
+  let input = document.createElement("div");
+  input.innerText = displayValue;
+  input.classList.add("in-screen");
+  displayArea.appendChild(input);
+
+  return input;
+}
+
+function logging(...args) {
+  args.forEach((arg) => {
+    console.log(arg);
+  });
+}
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+let history = [];
+let numbers = [];
+let evaluatedValue = 0;
+let lastOperation;
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// START
 buttons.forEach((button) =>
   button.addEventListener("click", function () {
-    // console.log(displayArea.hasChildNodes());
     let clicked = button.getAttribute("id");
     console.log(clicked);
-    console.log(displayArea);
     let value = ListOfButtons[clicked];
-    // console.log(value);
-    // console.log(typeof value);
-    if (value === ListOfButtons.clear) {
+
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    // IF CLEAR OR BACKSPACE
+
+    if (value === "clear") {
       try {
+        history = [];
+        numbers = [];
+        evaluatedValue = 0;
+        lastOperation = undefined;
         displayArea.innerHTML = "";
+        return;
       } catch {
-        console.log("NO child node yet");
+        console.log("Clear failed");
       }
     }
 
-    if (value === ListOfButtons.backspace) {
+    if (value === "backspace") {
       try {
-        console.log(displayArea.lastChild);
+        let getDeletion = history.pop();
         displayArea.lastChild.remove();
         return;
-        // displayArea.lastChild.remove();
-        // console.log(displayArea.lastChild);
       } catch {
-        console.log("NO element yet");
+        console.log("Backspace failed");
       }
+    }
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    // IF DECIMAL POINT
+
+    if (value === ".") {
+      history.push(value);
+      let input = makeNewDiv(value);
+      return;
+    }
+
+    //>>>>>>>>>>>>>>.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    // IF NUMBERSSSSSS
+
+    if (history.length > 11) {
+      displayArea.innerHTML = "";
+      let overflow = "Overflow".split("");
+      overflow.forEach((letter) => {
+        makeNewDiv(letter);
+      });
+      return;
     }
 
     if (typeof value === "number") {
       history.push(value);
-      let input = document.createElement("div");
-      // console.log("here");
-      input.innerHTML = value;
-      input.classList.add("in-screen");
-      // console.log(input);
-      displayArea.appendChild(input);
+      let input = makeNewDiv(value);
+      logging(history, numbers);
+
+      // ELSE OPERATIONS INCLUDING EQUALTO
     } else {
-      if (displayArea.hasChildNodes() === false) {
+      // >>>>>>>>>>>>>>>>>>>>
+
+      // FAILSAFE FOR TWO OPERATIONS TOGETHER
+
+      if (typeof history[history.length - 1] !== "number") {
         return;
       }
-      let input = document.createElement("div");
-      // console.log("here");
-      input.innerHTML = value.display;
-      input.classList.add("in-screen");
-      // console.log(input);
-      displayArea.appendChild(input);
+
+      ////////////////////
+
+      numbers.push(Number(history.join("")));
+      history = [];
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+      //LAST OPERATION
+
+      if (numbers.length === 2) {
+        try {
+          logging(history, numbers, evaluatedValue, lastOperation);
+          evaluatedValue = numbers.reduce(lastOperation);
+
+          if (evaluatedValue > 1000000000) {
+            evaluatedValue = String(evaluatedValue / 100000000 + "E8");
+          }
+
+          displayArea.innerHTML = "";
+
+          let newArray = String(evaluatedValue).split("");
+
+          newArray.forEach((element) => {
+            history.push(element);
+            makeNewDiv(element);
+
+            if (history.length > 9) {
+              return;
+            }
+          });
+
+          numbers = [];
+          numbers.push(evaluatedValue);
+        } catch {
+          console.log("Operation failed");
+          displayArea = "";
+          history = [];
+          numbers = [];
+          evaluatedValue = 0;
+        }
+      }
+
+      // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      // EQUAL TO IS BUILD DIFFERENT
+
+      if (value === "=") {
+        // yoooo
+
+        return;
+      }
+
+      // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+      let input = makeNewDiv(value.display);
+
+      lastOperation = value.operation;
+
+      logging(history, numbers, evaluatedValue, lastOperation);
     }
+
+    ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   })
 );
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
