@@ -50,13 +50,14 @@ h1 {
   justify-content: end;
   gap: 1px;
   margin-top: 10px;
-  padding: 15px;
+  padding: 10px;
 }
 
 .in-screen {
   box-sizing: border-box;
+  /* border: 1px solid red; */
   color: black;
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   /* padding-left: 10px; */
   /* margin-top: 90px; */
   text-align: end;
@@ -65,8 +66,8 @@ h1 {
   /* margin: 0px 5px; */
   /* padding-right: 10px; */
   font-family: "PT Mono", serif;
-  width: 9%;
-  height: 60%;
+  width: 7%;
+  height: 40%;
   /* margin-right: 5px; */
   /* margin-bottom: 5px; */
 }

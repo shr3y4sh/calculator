@@ -174,8 +174,8 @@ buttons.forEach((button) =>
     //>>>>>>>>>>>>>>.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     // IF NUMBERSSSSSS
-
-    if (history.length > 11) {
+    console.log(history.length);
+    if (history.length > 16) {
       displayArea.innerHTML = "";
       let overflow = "Overflow".split("");
       overflow.forEach((letter) => {

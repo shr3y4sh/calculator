@@ -48,15 +48,19 @@ const ListOfButtons = {
   backspace: "backspace",
 };
 
+///////////////////////////////////////////////////////
+
 function makeNewDiv(...displayValue) {
   displayValue.forEach((Value) => {
     let input = document.createElement("div");
     input.innerText = Value;
     input.classList.add("in-screen");
     displayArea.appendChild(input);
+    return input;
   });
-  return input;
 }
+
+/////////////////////////////////////////////////////////
 
 function logging(...args) {
   args.forEach((arg) => {
@@ -64,46 +68,149 @@ function logging(...args) {
   });
 }
 
-const numbers = {
-  alpha: 0,
-  beta: 0,
-  answer: 0,
-};
+///////////////////////////////////////////////////////
+
+function Numbers(
+  inputs = [],
+  operation = () => {
+    equalTo();
+  }
+) {
+  this.inputs = inputs;
+  this.operation = () => {
+    operation();
+  };
+}
+
+////////////////////////////////////////////////////////////////
 
 const buttons = document.querySelectorAll(".button");
 
 const displayArea = document.querySelector("#display");
 
 let history = [];
+let stateOfDocument = [];
+
+let player = new Numbers();
+
+//////////////////////////////////////////////////////////////////
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     // PLAY TIME
+
     animationAndSound(button);
     let clicked = button.getAttribute("id");
     let value = ListOfButtons[clicked];
+
+    playWithValue(value);
+
+    logging("State", stateOfDocument);
+
+    logging("history", history);
+
+    logging("player", player);
   });
 });
 
+////////////////////////////////////////////////////
+
+function playWithValue(value) {
+  stateOfDocument.push(value);
+
+  switch (value) {
+    case "clear":
+      clearAll();
+      break;
+    case "backspace":
+      backSpace();
+      break;
+    case "=":
+      equalTo();
+      break;
+    case ".":
+      decimalButton();
+      break;
+
+    default:
+      if (typeof value === "number") {
+        numbersClicked(value);
+      } else {
+        operationButton(value);
+      }
+      break;
+  }
+}
+
+////////////////////////////////////////////////////////////
+
+function logState() {
+  try {
+    let pop = stateOfDocument.pop();
+    logging(pop);
+    stateOfDocument.push(pop);
+  } catch {
+    logging("State of document empty");
+  }
+}
+
+/////////////////////////////////////////////////////////////
+
 function clearAll() {
+  displayArea.innerHTML = "";
+  history = [];
+  player = new Numbers();
   // CLEAR BUTTON CLICKED
 }
 
+///////////////////////////////////////////////////////////
+
 function backSpace() {
+  history.pop();
+  displayArea.lastChild.remove();
+  player.numbersFilled = false;
   // BACKSPACE BUTTON
 }
 
+///////////////////////////////////////////////////////////
+
 function equalTo() {
   //EQUAL BUTTON
+  //   numbers.numbersFilled = true;
+
+  player.inputs.push(Number(history.join("")));
+  history = [];
 }
 
-function numbersClicked() {
-  // ANY NUMBER PLUS DECIMAL
+/////////////////////////////////////////////////////////////
+
+function decimalButton(value) {
+  // DECIMAL BUTTON
 }
 
-function operationButton() {
+///////////////////////////////////////////////////////////
+
+function numbersClicked(value) {
+  // ANY NUMBER
+
+  history.push(value);
+  player.ready = false;
+  makeNewDiv(value);
+}
+
+//////////////////////////////////////////////////////////
+
+function operationButton(operation) {
   // LETS DO SOME OPERATION
+  //   numbers.numbersFilled = true;
+  stateOfDocument.push(operation.display);
+  player.inputs.push(Number(history.join("")));
+  history = [];
+
+  makeNewDiv(operation.display);
 }
+
+//////////////////////////////////////////////////////////
 
 function animationAndSound(button) {
   // ANIMATION AND SOUND.. DUH!!
