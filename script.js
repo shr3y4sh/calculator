@@ -96,15 +96,21 @@ let history = [];
 let numbers = [];
 let evaluatedValue = 0;
 let lastOperation;
-
+let justDoneOperation = false;
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // START
 buttons.forEach((button) =>
   button.addEventListener("click", function () {
     let clicked = button.getAttribute("id");
-    console.log(clicked);
+    // logging(clicked);
     let value = ListOfButtons[clicked];
+    // logging(justDoneOperation);
 
+    try {
+      logging(value.display);
+    } catch {
+      logging("NO LAST OPERATION");
+    }
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     // IF CLEAR OR BACKSPACE
@@ -133,6 +139,29 @@ buttons.forEach((button) =>
     }
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //JUST DONE OPERATION
+
+    if (justDoneOperation) {
+      displayArea.innerHTML = "";
+      String(evaluatedValue)
+        .split("")
+        .forEach((val) => {
+          makeNewDiv(val);
+        });
+      history = [];
+      numbers = [];
+      numbers.push(evaluatedValue);
+      justDoneOperation = false;
+
+      logging(history, numbers, justDoneOperation, evaluatedValue);
+      if (typeof value === "number" || value === ".") {
+        justDoneOperation = true;
+        logging(history, numbers, justDoneOperation, evaluatedValue);
+        return;
+      }
+    }
+
+    ////////////////////////////////////////////////////////////
 
     // IF DECIMAL POINT
 
@@ -158,7 +187,7 @@ buttons.forEach((button) =>
     if (typeof value === "number") {
       history.push(value);
       let input = makeNewDiv(value);
-      logging(history, numbers);
+      // logging(history, numbers);
 
       // ELSE OPERATIONS INCLUDING EQUALTO
     } else {
@@ -181,9 +210,9 @@ buttons.forEach((button) =>
 
       if (numbers.length === 2) {
         try {
-          logging(history, numbers, evaluatedValue, lastOperation);
+          // logging(history, numbers, evaluatedValue, lastOperation);
           evaluatedValue = numbers.reduce(lastOperation);
-
+          justDoneOperation = true;
           if (evaluatedValue > 1000000000) {
             evaluatedValue = String(evaluatedValue / 100000000 + "E8");
           }
@@ -205,7 +234,7 @@ buttons.forEach((button) =>
           numbers.push(evaluatedValue);
         } catch {
           console.log("Operation failed");
-          displayArea = "";
+          displayArea.innerHTML = "";
           history = [];
           numbers = [];
           evaluatedValue = 0;
@@ -217,7 +246,7 @@ buttons.forEach((button) =>
 
       if (value === "=") {
         // yoooo
-
+        justDoneOperation = false;
         return;
       }
 
@@ -227,7 +256,7 @@ buttons.forEach((button) =>
 
       lastOperation = value.operation;
 
-      logging(history, numbers, evaluatedValue, lastOperation);
+      // logging(history, numbers, evaluatedValue, lastOperation);
     }
 
     ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
