@@ -16,7 +16,10 @@ const ListOfButtons = {
     operation: (a, b) => {
       if (b === 0) {
         logging("ERROR");
-        return;
+        player = new Numbers();
+        history = [];
+        displayArea.innerHTML = "";
+        return 0;
       }
 
       return a / b;
@@ -133,7 +136,7 @@ function playWithValue(value) {
       equalTo(player.operation);
       break;
     case ".":
-      decimalButton();
+      decimalButton(value);
       break;
 
     default:
@@ -172,7 +175,6 @@ function clearAll() {
 function backSpace() {
   history.pop();
   displayArea.lastChild.remove();
-  player.numbersFilled = false;
   // BACKSPACE BUTTON
 }
 
@@ -195,6 +197,9 @@ function equalTo(operation) {
   }
 
   let answer = player.inputs.reduce(operation);
+
+  stateOfDocument.push("OPERATION");
+
   answer = Math.round(answer * 100) / 100;
 
   player.justOperated = true;
@@ -223,12 +228,26 @@ function equalTo(operation) {
 
 function decimalButton(value) {
   // DECIMAL BUTTON
+
+  if (history.length < 1) {
+    return;
+  }
+
+  history.push(value);
+  player.justOperated = false;
+  makeNewDiv(value);
 }
 
 ///////////////////////////////////////////////////////////
 
 function numbersClicked(value) {
   // ANY NUMBER
+
+  let check = stateOfDocument.slice(-2)[0];
+  if (check === "OPERATION") {
+    displayArea.innerHTML = "";
+    player.inputs = [];
+  }
 
   history.push(value);
   player.justOperated = false;
@@ -240,6 +259,12 @@ function numbersClicked(value) {
 function operationButton(operation) {
   // LETS DO SOME OPERATION
   if (player.inputs.length === 2) {
+    return;
+  }
+
+  let lastElement = stateOfDocument.slice(-2)[0];
+
+  if (typeof lastElement !== "number" && typeof lastElement !== "string") {
     return;
   }
 
