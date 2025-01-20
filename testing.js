@@ -14,15 +14,18 @@ const ListOfButtons = {
   divide: {
     display: "/",
     operation: (a, b) => {
-      dividend = a / b;
-      dividend = Math.round(dividend * 10) / 10;
-      return dividend;
+      if (b === 0) {
+        logging("ERROR");
+        return;
+      }
+
+      return a / b;
     },
   },
   multiply: {
     display: "*",
     operation: (a, b) => {
-      return Math.round(a * b * 10) / 10;
+      return a * b;
     },
   },
   subtract: {
@@ -40,7 +43,7 @@ const ListOfButtons = {
   power: {
     display: "^",
     operation: (a, b) => {
-      return Math.round(Math.pow(a, b) * 10) / 10;
+      return a ** b;
     },
   },
 
@@ -50,14 +53,11 @@ const ListOfButtons = {
 
 ///////////////////////////////////////////////////////
 
-function makeNewDiv(...displayValue) {
-  displayValue.forEach((Value) => {
-    let input = document.createElement("div");
-    input.innerText = Value;
-    input.classList.add("in-screen");
-    displayArea.appendChild(input);
-    return input;
-  });
+function makeNewDiv(value) {
+  let input = document.createElement("div");
+  input.innerText = value;
+  input.classList.add("in-screen");
+  displayArea.appendChild(input);
 }
 
 /////////////////////////////////////////////////////////
@@ -77,6 +77,7 @@ function Numbers(
   }
 ) {
   this.inputs = inputs;
+  this.justOperated = false;
   this.operation = () => {
     operation();
   };
@@ -99,6 +100,7 @@ buttons.forEach((button) => {
   button.addEventListener("click", () => {
     // PLAY TIME
 
+    logging(">>>>>>>>>>>>>>>>>>>>>> CLICKED >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     animationAndSound(button);
     let clicked = button.getAttribute("id");
     let value = ListOfButtons[clicked];
@@ -109,7 +111,9 @@ buttons.forEach((button) => {
 
     logging("history", history);
 
-    logging("player", player);
+    logging("player", player.inputs);
+
+    logging("operation", player.operation);
   });
 });
 
@@ -126,7 +130,7 @@ function playWithValue(value) {
       backSpace();
       break;
     case "=":
-      equalTo();
+      equalTo(player.operation);
       break;
     case ".":
       decimalButton();
@@ -174,12 +178,45 @@ function backSpace() {
 
 ///////////////////////////////////////////////////////////
 
-function equalTo() {
+function equalTo(operation) {
   //EQUAL BUTTON
-  //   numbers.numbersFilled = true;
+  if (player.justOperated || history.length < 1) {
+    return;
+  }
 
   player.inputs.push(Number(history.join("")));
+
+  displayArea.innerHTML = "";
+
   history = [];
+
+  if (player.inputs.length !== 2) {
+    return;
+  }
+
+  let answer = player.inputs.reduce(operation);
+  answer = Math.round(answer * 100) / 100;
+
+  player.justOperated = true;
+
+  let token;
+
+  try {
+    token = String(answer).split("");
+  } catch {
+    logging("Equal to mistake exception");
+    return;
+  }
+
+  logging("TOKEN: ", token);
+
+  token.forEach((token) => {
+    makeNewDiv(token);
+  });
+
+  player.inputs = [];
+
+  player.inputs.push(answer);
 }
 
 /////////////////////////////////////////////////////////////
@@ -194,7 +231,7 @@ function numbersClicked(value) {
   // ANY NUMBER
 
   history.push(value);
-  player.ready = false;
+  player.justOperated = false;
   makeNewDiv(value);
 }
 
@@ -202,10 +239,20 @@ function numbersClicked(value) {
 
 function operationButton(operation) {
   // LETS DO SOME OPERATION
-  //   numbers.numbersFilled = true;
-  stateOfDocument.push(operation.display);
-  player.inputs.push(Number(history.join("")));
-  history = [];
+  if (player.inputs.length === 2) {
+    return;
+  }
+
+  player.operation = operation.operation;
+
+  if (history.length > 0) {
+    player.inputs.push(Number(history.join("")));
+    history = [];
+  }
+
+  if (player.inputs.length === 2) {
+    equalTo(player.operation);
+  }
 
   makeNewDiv(operation.display);
 }
