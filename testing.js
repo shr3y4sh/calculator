@@ -293,3 +293,20 @@ function animationAndSound(button) {
     button.classList.remove("pressed");
   }, 200);
 }
+
+/////////////////////////////////////////////////////
+
+// KEYBOARD DISPATCHHH ////////////
+
+let clickPad = document;
+
+clickPad.addEventListener("keydown", (e) => {
+  logging("KEYBOARD: ", e);
+  let keyPressed = e.key;
+
+  makeKeyboardClick(e, keyPressed);
+});
+
+function makeKeyboardClick(keyEvent, keyPressed) {
+  return;
+}
