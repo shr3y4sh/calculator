@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Mono&display=swap");
 
+div {
+  /* border: 1px solid black; */
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -42,34 +46,77 @@ h1 {
 #display {
   box-sizing: border-box;
   width: 95%;
-  height: 22%;
+  height: 25%;
   border-radius: 10px;
   background-color: #eee;
   display: flex;
+  flex-direction: column;
   align-items: end;
   justify-content: end;
-  gap: 1px;
+  gap: 10px;
   margin-top: 10px;
-  padding: 10px;
+  padding: 0px 10px;
+}
+
+#history,
+#main-screen,
+.in-screen,
+.h-number {
+  border: #a91d3a solid 1px;
+}
+
+#history {
+  width: 90%;
+  height: 30%;
+  /* align-self: self-start;
+  justify-self: self-start; */
+  display: flex;
+  justify-content: end;
+  color: #151515;
+  font-size: 1.3rem;
+  /* position: static; */
+}
+
+.h-number {
+  height: 100%;
+  width: 3%;
+  font-size: 1.8rem;
+  color: black;
+  text-align: end;
+  opacity: 0.5;
+}
+
+#main-screen {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: end;
 }
 
 .in-screen {
   box-sizing: border-box;
   /* border: 1px solid red; */
-  color: black;
-  font-size: 2.5rem;
+  color: #500404;
+  font-size: 3.2rem;
+  font-weight: 700;
   /* padding-left: 10px; */
   /* margin-top: 90px; */
-  text-align: end;
+  text-align: center;
   /* width: auto; */
   /* padding: 20px 10px; */
   /* margin: 0px 5px; */
   /* padding-right: 10px; */
   font-family: "PT Mono", serif;
-  width: 7%;
-  height: 40%;
+  width: 6%;
+  height: 60%;
+  /* opacity: 0.8; */
   /* margin-right: 5px; */
   /* margin-bottom: 5px; */
+}
+
+.empty-space {
+  width: 2%;
+  height: 60%;
 }
 
 #button-area {
