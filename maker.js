@@ -16,6 +16,12 @@ objects!
 */
 
 const AllButtonsDisplay = {
+  /*
+THIS OBJECT IS FOR DISPLAYING 
+THE THINGS ON THE CALCULATOR 
+PLAY NICE
+*/
+
   one: 1,
   two: 2,
   three: 3,
@@ -37,18 +43,48 @@ const AllButtonsDisplay = {
   backspace: "backspace",
 };
 
+const ListOfFlags = {
+  /* 
+    NOW THIS IS FOR EVERY IF-ELSE STATEMENTS
+    USE THIS TO MAKE SURE WE REMEMBER THE 
+    LAST THING THAT HAPPENED
+    */
+
+  newDay: true,
+  onScreen: false,
+  history: false,
+  button: {
+    number: false,
+    operation: false,
+    decimal: false,
+    deletion: false,
+    equal: false,
+    negative: false,
+  },
+};
+
 let historyplay = {
+  /* 
+    EVERYTHING HAPPENIN IN HISTORY SCREEN
+    */
   show: 0,
   stash: [],
 };
 
 let mainPlay = {
+  /* 
+        MAIN PLAYER, THINGS ON MAIN SCREEN
+    */
   onScreenNumber: [],
   fillNumber: [],
   Operation: "",
 };
 
 let buttonsObject = {
+  /* 
+        MADE A BUTTON HISTORY PLAYER JUST IN CASE
+        WILL TURN IT INTO ARRAY ONLY
+    */
   buttonHistory: [],
 };
 
@@ -66,19 +102,50 @@ function animationAndSound(button) {
 
 buttonList.forEach((button) =>
   button.addEventListener("click", (e) => {
-    // e.bubbles = false;
+    buttonsObject.reload = false;
     animationAndSound(button);
 
     let newtarget = e.target.parentNode;
 
     let newtargetId = newtarget.getAttribute("id");
 
-    // console.log(newtargetId);
-
     if (newtargetId === "button-area") {
       newtarget = e.target;
     }
 
-    console.log(newtarget);
+    Calculator(newtarget);
   })
 );
+
+function Calculator(target) {
+  /* 
+        HERE THE MAIN PLAY HAPPEN
+    */
+  let excalibur = target.getAttribute("id");
+
+  player = AllButtonsDisplay[excalibur];
+
+  if (typeof player === "number") {
+    ListOfFlags.button.number = true;
+    showNumber(player);
+    return;
+  }
+}
+
+function makeNewDiv(display) {
+  /* 
+        OUT TRUSTY DIV MAKER
+    */
+  let input = document.createElement("div");
+  input.innerHTML = display;
+  return input;
+}
+
+function showNumber(number) {
+  /* 
+        WHATEVER HAPPENS WHEN NUMBERS ARE PRESSED
+    */
+  let entry = makeNewDiv(number);
+  entry.classList.add("in-screen");
+  mainScreen.appendChild(entry);
+}

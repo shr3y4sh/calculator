@@ -62,7 +62,7 @@ h1 {
 #main-screen,
 .in-screen,
 .h-number {
-  border: #a91d3a solid 1px;
+  /* border: #a91d3a solid 1px; */
 }
 
 #history {
