@@ -80,13 +80,7 @@ let mainPlay = {
   Operation: "",
 };
 
-let buttonsObject = {
-  /* 
-        MADE A BUTTON HISTORY PLAYER JUST IN CASE
-        WILL TURN IT INTO ARRAY ONLY
-    */
-  buttonHistory: [],
-};
+let buttonHistory = [];
 
 const buttonList = document.querySelectorAll(".button");
 
@@ -102,7 +96,6 @@ function animationAndSound(button) {
 
 buttonList.forEach((button) =>
   button.addEventListener("click", (e) => {
-    buttonsObject.reload = false;
     animationAndSound(button);
 
     let newtarget = e.target.parentNode;
@@ -114,6 +107,8 @@ buttonList.forEach((button) =>
     }
 
     Calculator(newtarget);
+
+    console.log(buttonHistory);
   })
 );
 
@@ -125,11 +120,9 @@ function Calculator(target) {
 
   player = AllButtonsDisplay[excalibur];
 
-  if (typeof player === "number") {
-    ListOfFlags.button.number = true;
-    showNumber(player);
-    return;
-  }
+  printOnScreen(player);
+
+  workingOperation(player);
 }
 
 function makeNewDiv(display) {
@@ -141,11 +134,90 @@ function makeNewDiv(display) {
   return input;
 }
 
-function showNumber(number) {
-  /* 
-        WHATEVER HAPPENS WHEN NUMBERS ARE PRESSED
-    */
-  let entry = makeNewDiv(number);
+function printOnScreen(input) {
+  if (input === "clear" || input === "backspace" || input === "=") {
+    return;
+  }
+
+  buttonHistory.push(input);
+  let entry = makeNewDiv(input);
   entry.classList.add("in-screen");
   mainScreen.appendChild(entry);
+  ListOfFlags.onScreen = true;
+}
+
+function workingOperation(input) {
+  switch (input) {
+    case "clear":
+      clearAll();
+      break;
+
+    case "backspace":
+      backspace();
+      break;
+
+    case "=":
+      evaluate();
+      break;
+
+    case "^":
+      //exponent();
+      break;
+
+    case "+":
+      //sum();
+      break;
+
+    case "-":
+      //negative();
+      break;
+
+    case "*":
+      //product();
+      break;
+
+    case "/":
+      //quotient();
+      break;
+
+    case ".":
+      //decimal();
+      break;
+
+    default:
+      inputNumbers(input);
+      break;
+  }
+}
+
+function backspace() {
+  mainScreen.lastChild.remove();
+
+  let deletedItem = buttonHistory.pop();
+
+  console.log(deletedItem);
+
+  if (typeof deletedItem === "number") {
+    mainPlay.onScreenNumber.pop();
+  }
+  // console.log(mainPlay.onScreenNumber);
+  if (mainScreen.childElementCount == 0) {
+    // console.log("Does it work?");
+    ListOfFlags.onScreen = false;
+  }
+
+  // console.log(ListOfFlags.onScreen);
+}
+
+function clearAll() {
+  mainScreen.innerHTML = "";
+  ListOfFlags.onScreen = false;
+  mainPlay.onScreenNumber = [];
+  // console.log(ListOfFlags.onScreen);
+}
+
+function inputNumbers(input) {
+  mainPlay.onScreenNumber.push(input);
+  console.log(mainPlay.onScreenNumber);
+  return;
 }
