@@ -4,28 +4,30 @@ body {
 	flex-direction: column;
 	background-color: black;
 	align-items: center;
-    color: aliceblue;
+	color: aliceblue;
 }
 
 h1 {
 	font-size: 3rem;
+	margin-bottom: 5rem;
 }
 
 #calculator {
 	background-color: darkmagenta;
-	margin: 3rem;
+	margin-left: 1rem;
+	margin-right: 0.5rem;
 	display: flex;
 	flex-direction: column;
 	min-width: 20rem;
 	padding: 10px;
-    border: 1px solid black;
-    border-radius: 1rem;
+	border: 1px solid black;
+	border-radius: 1rem;
 }
 
 .display-area {
 	/* width: 95%; */
-    height: 7rem;
-    border-radius: 0.5rem;
+	height: 7rem;
+	border-radius: 0.5rem;
 	background-color: lightpink;
 	color: blueviolet;
 }
@@ -40,65 +42,58 @@ h1 {
 }
 
 .button-area {
-    background-color: lightblue;
+	background-color: lightblue;
 	margin-top: 1rem;
 	height: 22rem;
 	border: 1px solid black;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-    padding: 5px;
-    font-size: 1.5rem;
-    border-radius: 0.5rem;
+	gap: 2px;
+	padding: 5px;
+	font-size: 1.5rem;
+	border-radius: 0.5rem;
 }
 
 button {
-    font-size: inherit;
-    border-radius: 5px;
+	font-size: inherit;
+	border-radius: 5px;
 }
 
 #evaluate {
 	grid-column: span 2;
 }
 
-#backspace {
-	grid-column: span 2;
-}
-
 footer {
-	margin-top: 3rem;
+	margin-top: 6rem;
 }
-
 
 @media (min-width: 899px) {
+	h1 {
+		font-size: 4rem;
+	}
 
+	.display-area {
+		height: 30%;
+	}
 
-    h1 {
-        font-size: 4rem;
-    }
+	.button-area {
+		height: 70%;
+	}
 
-    .display-area {
-        height: 30%;
-    }
+	#calculator {
+		margin-top: 2rem;
+		min-width: 27rem;
+		padding: 1.2rem;
+		height: 37rem;
+	}
 
-    .button-area {
-        height: 70%;
-    }
+	.display-area {
+		height: 10rem;
+	}
 
-    #calculator {
-        margin-top: 2rem;
-        min-width: 27rem;
-        padding: 1.2rem;
-        height: 37rem;
-    }
-
-    .display-area {
-        height: 10rem;
-    }
-
-    footer {
-        margin-top: 2rem;
-        font-size: 1.4rem;
-        font-weight: 700;
-    }
+	footer {
+		margin-top: 5rem;
+		font-size: 1.4rem;
+		font-weight: 700;
+	}
 }
