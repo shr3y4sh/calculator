@@ -4,79 +4,57 @@ export const history = {
 	numbers: [],
 	operators: [],
 	inputStack: [],
-	temporary: null,
 	junk: []
 };
 
-export default class Calculator {
-	constructor(numbers) {
-		this.numbers = numbers;
+class Calculator {
+	constructor(operationsObject) {
+		this.operators = operationsObject;
 	}
 
 	enterNumber(value) {
-		// calling this will push a number into stack
-		history.inputStack(value);
-	}
-
-	enterOperator(value) {
-		// enter the operator to the stack
-
 		return new Promise((resolve, reject) => {
-			////////////////////////////////////////////////////////////
-			// WILL_NOT_HAVE_TO_USE_SWITCH_WHEN_USING_ACTUAL_CALCULATOR
-			switch (value) {
-				case '^':
-					this.operator = operationsObject.exponent;
-					break;
-
-				case '/':
-					this.operator = operationsObject.division;
-					break;
-
-				case '*':
-					this.operator = operationsObject.multiplication;
-					break;
-
-				case '+':
-					this.operator = operationsObject.addition;
-					break;
-				default:
-					break;
+			if (this.beta) {
+				return reject(value);
 			}
-			//ONLY_TEMPORARY
-			/////////////////////////////////////////////////////////////
-			if (history.temporary.length || history.temporary === 0) {
-				resolve(this.operator);
+
+			if (this.alpha) {
+				this.beta = value;
+				resolve(this.beta);
 			} else {
-				reject();
+				this.alpha = value;
+				resolve(this.alpha);
 			}
 		})
-			.then((value) => {
-				this.beta = Number(history.inputStack.join(''));
-				this.alpha = history.temporary;
-				this.operator = history.operators.pop();
-				history.operators.push(value);
-				return history.numbers.push(
-					this.operator(this.alpha, this.beta)
-				);
-			})
-			.catch(() =>
-				console.log(
-					'Previous operation unresolved Or first number not present'
-				)
-			);
+			.then(history.numbers.push)
+			.catch(history.junk.push);
 	}
 
-	backpace() {
-		// delete from inputStack
-		return history.junk.push(history.inputStack.pop());
-	}
-
-	clearAll() {
-		// remove everything from stack
-
+	evaluate(callback) {
 		history.inputStack = [];
-		history.operators = [];
-		history.temporary = [];
+		return history.numbers.push(callback(this.alpha, this.beta));
+	}
+
+	enterOperation(value) {
+		return new Promise((resolve, reject) => {
+			this.nextOperator = this.operators[`${value}`];
+
+			if (history.operators.length === 0) {
+				reject(this.nextOperator);
+			} else {
+				this.currentOperator = history.operators.pop();
+				history.operators.push(this.nextOperator);
+				resolve(this.currentOperator);
+			}
+		})
+			.then(this.evaluate)
+			.catch(history.operators.push);
+	}
+
+	backSpace(value) {
+		history.inputStack.pop();
+		history.junk.pop(value);
 	}
 }
+
+export const calculator = new Calculator(operationsObject);
